@@ -13,14 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static fr.jukien.intellij.plugins.util.Util.*;
 
-/**
- * Created on 19/04/2019
- *
- * @author JDI
- * @version 2.3.0
- * @since 1.0.0
- */
-public class Entity extends GenericEntityAction  {
+public class SpringEntity extends GenericEntityAction {
     private String actionText = StringUtils.EMPTY;
 
     @Override
@@ -128,12 +121,14 @@ public class Entity extends GenericEntityAction  {
         javaTextFile.append("\n");
         javaTextFile.append("@Entity")
                     .append("\n");
+
         if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
             javaTextFile.append("@IdClass(")
                         .append(classNameComposite)
                         .append(".class)")
                         .append("\n");
         }
+
         if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
             LinkedSet<Field> fieldsWithoutPrimary = new LinkedSet<>();
 
@@ -232,7 +227,7 @@ public class Entity extends GenericEntityAction  {
         createFile(project, javaTextFile, fileName, pojoGeneratorSettings);
     }
 
-    private void addColumnAnnotationAttributes(StringBuilder javaTextFile, Field field) {
+    private static void addColumnAnnotationAttributes(StringBuilder javaTextFile, Field field) {
         if (null != field.getColumnDefinition()) {
             javaTextFile.append(", columnDefinition = \"");
             javaTextFile.append(field.getColumnDefinition());
@@ -244,14 +239,16 @@ public class Entity extends GenericEntityAction  {
         }
     }
 
-    private boolean isCompositePrimaryKeyAvailable(POJOGeneratorSettings pojoGeneratorSettings, TableInfo tableInfo) {
-        return pojoGeneratorSettings.getGenerateCompositePrimaryKey() && tableInfo.getPrimaryKeys().size() > 1;
+    private static boolean isCompositePrimaryKeyAvailable(POJOGeneratorSettings pojoGeneratorSettings, TableInfo tableInfo) {
+        return pojoGeneratorSettings.getGenerateCompositePrimaryKey() && tableInfo.getPrimaryKeys()
+                                                                                  .size() > 1;
     }
 
     @Override
     public void update(@NotNull AnActionEvent anActionEvent) {
         if (actionText.isEmpty()) {
-            actionText = anActionEvent.getPresentation().getText();
+            actionText = anActionEvent.getPresentation()
+                                      .getText();
         }
 
         checkActionVisibility(anActionEvent, actionText);

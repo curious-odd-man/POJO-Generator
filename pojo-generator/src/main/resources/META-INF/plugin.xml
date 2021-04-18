@@ -212,7 +212,8 @@ Below the default mapping table used by the plugin:<br/><br/>
         <group id="org.jetbrains.tutorials.actions.GroupedActions" text="POJO Generator" popup="true" icon="/META-INF/pluginIcon.svg">
             <add-to-group group-id="DatabaseViewPopupMenu" anchor="after" relative-to-action="DatabaseView.RunExtensionScriptGroup"/>
             <action id="entity" class="fr.jukien.intellij.plugins.action.Entity" text="Entity" description="Generate an Entity" icon="/META-INF/pluginIcon.svg"/>
-            <action id="dto" class="fr.jukien.intellij.plugins.action.DTO" text="DTO" description="Generate a Data Transfert Object" icon="/META-INF/pluginIcon.svg"/>
+            <action id="spring-entity" class="fr.jukien.intellij.plugins.action.SpringEntity" text="Spring Entity" description="Generate an Entity in Spring format" icon="/META-INF/pluginIcon.svg"/>
+            <action id="dto" class="fr.jukien.intellij.plugins.action.DTO" text="DTO" description="Generate a Data Transfer Object" icon="/META-INF/pluginIcon.svg"/>
         </group>
     </actions>
 </idea-plugin>
